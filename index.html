@@ -309,119 +309,185 @@ section {
 #precursora .focus:hover .go .material-icons { transform: translateX(4px); }
 #precursora .closing-line { font-size: 18px; color: var(--text); margin-top: 40px; text-align: center; font-style: italic; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-/* SUB-SECCIONES (catedras, ingles, jue, capacidades) */
-.sub-section { background: var(--bg); position: relative; padding-top: 100px; }
-.sub-section::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  z-index: 3;
+/* SUB-SECCIONES (catedras, ingles, jue, capacidades) — ahora modales flotantes tilt 3D */
+.float-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  display: none; align-items: center; justify-content: center;
+  padding: 40px 20px;
+  background: rgba(15, 10, 30, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
-.sub-section .sub-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-.sub-section .sub-header .back {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px;
+.float-modal.open { display: flex; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes floatIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.float-modal .float-card {
+  max-width: 1100px; width: 100%; max-height: 88vh; overflow-y: auto;
+  padding: 40px 48px;
+  position: relative;
+  animation: floatIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s ease-out;
+}
+.float-modal .float-card .float-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 44px; height: 44px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--glass); color: var(--text);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease; z-index: 10;
+}
+.float-modal .float-card .float-close:hover { border-color: var(--accent); color: var(--accent); transform: rotate(90deg); }
+.float-modal .float-card .float-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px;
   background: var(--glass); color: var(--text-2); cursor: pointer;
   font-family: var(--font-num); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  text-decoration: none; transition: all 0.2s ease;
+  transition: all 0.2s ease; margin-bottom: 20px; font-weight: 600;
 }
-.sub-section .sub-header .back:hover { border-color: var(--accent); color: var(--accent); }
-.sub-section .sub-header .back .material-icons { font-size: 16px; }
-.sub-section .sub-header .crumb { font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
-.sub-section .sub-header .crumb b { color: var(--accent); font-weight: 700; }
-.sub-section .section-header { margin-bottom: 32px; }
-.sub-section .section-header h2 { font-size: clamp(32px, 4vw, 48px); }
+.float-modal .float-card .float-back:hover { border-color: var(--accent); color: var(--accent); transform: translateX(-3px); }
+.float-modal .float-card .float-back .material-icons { font-size: 16px; }
+.float-modal .float-card .crumb { font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); display: inline-block; margin-left: 12px; }
+.float-modal .float-card .crumb b { color: var(--accent); font-weight: 700; }
+.float-modal .float-card .float-header { margin-bottom: 28px; }
+.float-modal .float-card .float-header h2 {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.1; color: var(--text); letter-spacing: -0.02em; margin-top: 12px;
+}
+.float-modal .float-card .float-header p { font-size: 16px; color: var(--text-2); max-width: 720px; margin-top: 12px; line-height: 1.55; }
+.float-modal .float-card .accent-bar { margin-top: 16px; }
 
-/* Cátedras: tabs internas */
-#catedras .tabs {
-  display: flex; gap: 8px; margin-top: 36px; padding: 8px;
+/* Cátedras: tabs internas dentro del modal flotante */
+.catedras-tabs {
+  display: flex; gap: 8px; margin-top: 32px; padding: 8px;
   border: 1px solid var(--line); border-radius: 999px;
-  background: var(--glass); width: max-content; max-width: 100%; overflow-x: auto;
+  background: var(--glass); max-width: 100%; overflow-x: auto;
+  scrollbar-width: none;
 }
-#catedras .tab {
+.catedras-tabs::-webkit-scrollbar { display: none; }
+.catedras-tabs .tab {
   padding: 10px 18px; border-radius: 999px; background: transparent; border: none;
   color: var(--text-muted); cursor: pointer;
   font-family: var(--font-num); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
   transition: all 0.2s ease; white-space: nowrap; font-weight: 600;
 }
-#catedras .tab:hover { color: var(--text); background: var(--glass-strong); }
-#catedras .tab.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-weight: 700; }
-#catedras .tab-panels { margin-top: 32px; position: relative; min-height: 360px; }
-#catedras .tab-panel { display: none; flex-direction: column; gap: 24px; animation: fadeIn 0.4s ease; }
-#catedras .tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-#catedras .panel-left { padding: 32px; display: flex; flex-direction: column; gap: 14px; }
-#catedras .panel-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
-#catedras .panel-left h3 { font-family: var(--font-heading); font-size: 26px; color: var(--text); font-weight: 700; line-height: 1.2; }
-#catedras .panel-left .desc { font-size: 15px; color: var(--text-2); line-height: 1.55; }
-#catedras .panel-left .que-hacemos { margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--line); }
-#catedras .panel-left .que-hacemos .qlbl { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 6px; display: block; }
-#catedras .panel-left .que-hacemos p { font-size: 14px; color: var(--text-2); line-height: 1.5; }
-#catedras .panel-left .nav-between { display: flex; gap: 10px; margin-top: auto; padding-top: 16px; }
-#catedras .panel-left .nav-btn {
+.catedras-tabs .tab:hover { color: var(--text); background: var(--glass-strong); }
+.catedras-tabs .tab.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-weight: 700; }
+.catedras-panels { margin-top: 28px; position: relative; min-height: 360px; }
+.catedras-panel { display: none; animation: fadeIn 0.4s ease; }
+.catedras-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.catedras-panel .panel-left { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+.catedras-panel .panel-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+.catedras-panel .panel-left h3 { font-family: var(--font-heading); font-size: 24px; color: var(--text); font-weight: 700; line-height: 1.2; }
+.catedras-panel .panel-left .desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.catedras-panel .panel-left .que-hacemos { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); }
+.catedras-panel .panel-left .que-hacemos .qlbl { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 6px; display: block; }
+.catedras-panel .panel-left .que-hacemos p { font-size: 14px; color: var(--text-2); line-height: 1.5; }
+.catedras-panel .panel-left .nav-between { display: flex; gap: 10px; margin-top: auto; padding-top: 14px; }
+.catedras-panel .panel-left .nav-btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px;
   background: var(--glass); color: var(--text-2); cursor: pointer;
   font-family: var(--font-num); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease; font-weight: 600;
 }
-#catedras .panel-left .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-#catedras .panel-left .nav-btn .material-icons { font-size: 16px; }
-#catedras .panel-right { padding: 32px; border: 2px dashed var(--line-strong); border-radius: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 340px; justify-content: center; align-items: center; text-align: center; }
-#catedras .panel-right .ph-label { font-family: var(--font-num); font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
-#catedras .panel-right .ph-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
-#catedras .panel-right .ph-icon .material-icons { color: var(--primary); font-size: 28px; }
-#catedras .panel-right .ph-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; max-width: 360px; }
+.catedras-panel .panel-left .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+.catedras-panel .panel-left .nav-btn .material-icons { font-size: 16px; }
+.catedras-panel .panel-right {
+  padding: 28px; border: 2px dashed var(--line-strong); border-radius: 18px;
+  display: flex; flex-direction: column; gap: 14px; min-height: 320px;
+  justify-content: center; align-items: center; text-align: center;
+}
+.catedras-panel .panel-right .ph-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+.catedras-panel .panel-right .ph-icon .material-icons { color: var(--primary); font-size: 30px; }
+.catedras-panel .panel-right .ph-label { font-family: var(--font-num); font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+.catedras-panel .panel-right .ph-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; max-width: 360px; }
 
-/* Inglés por niveles */
-#ingles .ingles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
-#ingles .ingles-left { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
-#ingles .ingles-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
-#ingles .ingles-left h3 { font-family: var(--font-heading); font-size: 24px; color: var(--text); font-weight: 700; }
-#ingles .ingles-left .desc { font-size: 15px; color: var(--text-2); line-height: 1.55; }
-#ingles .ingles-left .pasos { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
-#ingles .ingles-left .paso { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
-#ingles .ingles-left .paso .num { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 13px; color: var(--accent); font-weight: 700; }
-#ingles .ingles-left .paso .body h4 { font-family: var(--font-heading); font-size: 15px; color: var(--text); font-weight: 600; margin: 0; }
-#ingles .ingles-left .paso .body p { font-size: 13px; color: var(--text-2); line-height: 1.45; margin: 2px 0 0 0; }
-#ingles .ingles-right { padding: 32px; border: 2px dashed var(--line-strong); border-radius: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 340px; justify-content: center; align-items: center; text-align: center; }
+/* Inglés (modal) */
+.ingles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+.ingles-grid .ingles-left { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+.ingles-grid .ingles-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+.ingles-grid .ingles-left h3 { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-weight: 700; }
+.ingles-grid .ingles-left .desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.ingles-grid .ingles-left .pasos { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+.ingles-grid .ingles-left .paso { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
+.ingles-grid .ingles-left .paso .num { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 13px; color: var(--accent); font-weight: 700; }
+.ingles-grid .ingles-left .paso .body h4 { font-family: var(--font-heading); font-size: 15px; color: var(--text); font-weight: 600; margin: 0; }
+.ingles-grid .ingles-left .paso .body p { font-size: 13px; color: var(--text-2); line-height: 1.45; margin: 2px 0 0 0; }
+.ingles-grid .ingles-right {
+  padding: 28px; border: 2px dashed var(--line-strong); border-radius: 18px;
+  display: flex; flex-direction: column; gap: 14px; min-height: 320px;
+  justify-content: center; align-items: center; text-align: center;
+}
+.ingles-grid .ingles-right .ph-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+.ingles-grid .ingles-right .ph-icon .material-icons { color: var(--primary); font-size: 30px; }
+.ingles-grid .ingles-right .ph-label { font-family: var(--font-num); font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+.ingles-grid .ingles-right .ph-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; max-width: 360px; }
 
-/* JUE + Contingencias */
-#jue-section .jue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
-#jue-section .jue-left { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
-#jue-section .jue-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
-#jue-section .jue-left h3 { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-weight: 700; line-height: 1.3; }
-#jue-section .jue-left .desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
-#jue-section .jue-left .steps4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
-#jue-section .jue-left .step4 { display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
-#jue-section .jue-left .step4 .n { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 14px; color: var(--bg); font-weight: 700; }
-#jue-section .jue-left .step4 .t { font-family: var(--font-heading); font-size: 11px; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-#jue-section .jue-left .step4 .d { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
-#jue-section .jue-left .quote { margin-top: 16px; padding: 16px; border-left: 3px solid var(--accent); font-style: italic; font-size: 14px; color: var(--text); background: var(--glass); border-radius: 0 8px 8px 0; }
-#jue-section .jue-right { padding: 32px; border: 2px dashed var(--line-strong); border-radius: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 340px; justify-content: center; align-items: center; text-align: center; }
+/* JUE (modal) */
+.jue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+.jue-grid .jue-left { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+.jue-grid .jue-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+.jue-grid .jue-left h3 { font-family: var(--font-heading); font-size: 20px; color: var(--text); font-weight: 700; line-height: 1.3; }
+.jue-grid .jue-left .desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.jue-grid .jue-left .steps4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--line); }
+.jue-grid .jue-left .step4 { display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
+.jue-grid .jue-left .step4 .n { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 15px; color: var(--bg); font-weight: 700; }
+.jue-grid .jue-left .step4 .t { font-family: var(--font-heading); font-size: 11px; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.jue-grid .jue-left .step4 .d { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
+.jue-grid .jue-left .quote { margin-top: 14px; padding: 14px; border-left: 3px solid var(--accent); font-style: italic; font-size: 14px; color: var(--text); background: var(--glass); border-radius: 0 8px 8px 0; }
+.jue-grid .jue-right {
+  padding: 28px; border: 2px dashed var(--line-strong); border-radius: 18px;
+  display: flex; flex-direction: column; gap: 14px; min-height: 320px;
+  justify-content: center; align-items: center; text-align: center;
+}
+.jue-grid .jue-right .ph-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+.jue-grid .jue-right .ph-icon .material-icons { color: var(--primary); font-size: 30px; }
+.jue-grid .jue-right .ph-label { font-family: var(--font-num); font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+.jue-grid .jue-right .ph-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; max-width: 360px; }
 
-/* Capacidades */
-#capacidades .cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
-#capacidades .cap { padding: 28px; display: flex; flex-direction: column; gap: 10px; min-height: 180px; transition: transform 0.3s ease, border-color 0.3s ease; }
-#capacidades .cap:hover { transform: translateY(-4px); border-color: var(--accent); }
-#capacidades .cap .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; }
-#capacidades .cap .ic .material-icons { color: var(--accent); font-size: 24px; }
-#capacidades .cap h3 { font-family: var(--font-heading); font-size: 18px; color: var(--text); font-weight: 700; }
-#capacidades .cap .sub { font-size: 13px; color: var(--text-2); line-height: 1.4; }
-#capacidades .closing-line { font-size: 17px; color: var(--text); margin-top: 40px; text-align: center; font-style: italic; max-width: 900px; margin-left: auto; margin-right: auto; }
+/* Capacidades (modal) */
+.cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+.cap { padding: 24px; display: flex; flex-direction: column; gap: 10px; min-height: 180px; transition: transform 0.3s ease, border-color 0.3s ease; }
+.cap:hover { transform: translateY(-4px); border-color: var(--accent); }
+.cap .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; }
+.cap .ic .material-icons { color: var(--accent); font-size: 24px; }
+.cap h3 { font-family: var(--font-heading); font-size: 16px; color: var(--text); font-weight: 700; }
+.cap .sub { font-size: 13px; color: var(--text-2); line-height: 1.4; }
+.cap-closing { font-size: 16px; color: var(--text); margin-top: 28px; text-align: center; font-style: italic; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-/* CATALOGO */
+/* CATALOGO (Cuadernillo) — nueva versión con focos + ejemplos + botón PDF */
 #catalogo { background: var(--bg-2); }
-#catalogo .bento { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
-#catalogo .tile { padding: 22px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease; position: relative; }
-#catalogo .tile:hover { transform: translateY(-6px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 32px rgba(244,114,182,0.18); }
-#catalogo .tile .ic { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; background: var(--glass); transition: all 0.3s ease; }
-#catalogo .tile:hover .ic { background: linear-gradient(135deg, var(--primary), var(--accent)); border-color: transparent; }
-#catalogo .tile:hover .ic .material-icons { color: var(--bg); }
-#catalogo .tile .ic .material-icons { color: var(--accent); font-size: 24px; transition: color 0.3s ease; }
-#catalogo .tile h3 { font-family: var(--font-heading); font-size: 17px; color: var(--text); margin: 0; font-weight: 700; }
-#catalogo .tile .eje { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary); }
-#catalogo .tile p { font-size: 13px; color: var(--text-2); line-height: 1.4; margin: 0; flex: 1; }
-#catalogo .tile .more { font-family: var(--font-num); font-size: 11px; color: var(--accent); margin-top: 8px; display: flex; align-items: center; gap: 4px; opacity: 0.7; }
-#catalogo .tile:hover .more { opacity: 1; }
+#catalogo .focos-block { margin-top: 48px; }
+#catalogo .focos-label { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 20px; }
+#catalogo .focos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+#catalogo .foco { padding: 24px; display: flex; flex-direction: column; gap: 8px; min-height: 160px; transition: transform 0.3s ease, border-color 0.3s ease; }
+#catalogo .foco:hover { transform: translateY(-4px); border-color: var(--accent); }
+#catalogo .foco .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; }
+#catalogo .foco .ic .material-icons { color: var(--accent); font-size: 24px; }
+#catalogo .foco h3 { font-family: var(--font-heading); font-size: 17px; color: var(--text); font-weight: 700; }
+#catalogo .foco .sub { font-size: 13px; color: var(--text-2); line-height: 1.4; }
+#catalogo .ejemplos-block { margin-top: 36px; padding: 32px; }
+#catalogo .ejemplos-block .lbl { font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+#catalogo .ejemplos-block .lista { display: flex; flex-wrap: wrap; gap: 12px; }
+#catalogo .ejemplos-block .ej { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--glass); font-family: var(--font-heading); font-size: 14px; color: var(--text); font-weight: 600; transition: all 0.2s ease; cursor: pointer; }
+#catalogo .ejemplos-block .ej:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+#catalogo .ejemplos-block .ej .material-icons { font-size: 16px; color: var(--accent); }
+#catalogo .pdf-block { margin-top: 36px; padding: 40px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+#catalogo .pdf-block .pdf-ic { width: 72px; height: 72px; border-radius: 18px; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 32px rgba(244,114,182,0.25); }
+#catalogo .pdf-block .pdf-ic .material-icons { color: var(--bg); font-size: 36px; }
+#catalogo .pdf-block h3 { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-weight: 700; }
+#catalogo .pdf-block .pdf-sub { font-size: 14px; color: var(--text-muted); max-width: 560px; line-height: 1.5; }
+#catalogo .pdf-block .pdf-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 999px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-family: var(--font-num); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 24px rgba(244,114,182,0.25); }
+#catalogo .pdf-block .pdf-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 32px rgba(244,114,182,0.35); }
+#catalogo .pdf-block .pdf-btn .material-icons { font-size: 20px; }
+
+/* Mantengo el .bento viejo por si se referencia en JS, pero no se usa */
+#catalogo .bento { display: none; }
 
 /* Modal */
 #modal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 40px; background: rgba(15, 10, 30, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -507,10 +573,6 @@ section {
   <a href="#regimen" class="nav-link" data-target="regimen">Régimen</a>
   <a href="#jornada" class="nav-link" data-target="jornada">Jornada</a>
   <a href="#precursora" class="nav-link" data-target="precursora">Precursora</a>
-  <a href="#catedras" class="nav-link" data-target="catedras">Cátedras</a>
-  <a href="#ingles" class="nav-link" data-target="ingles">Inglés</a>
-  <a href="#jue-section" class="nav-link" data-target="jue-section">JUE</a>
-  <a href="#capacidades" class="nav-link" data-target="capacidades">Capacidades</a>
   <a href="#catalogo" class="nav-link" data-target="catalogo">Cuadernillo</a>
   <a href="#cierre" class="nav-link" data-target="cierre">Cierre</a>
 </nav>
@@ -749,61 +811,59 @@ section {
     <div class="section-header reveal">
       <span class="brand-chip"><span class="dot"></span>Escuela Precursora · Res. 88/25</span>
       <h2>Transformar la enseñanza,<br>no solo el <span class="text-grad">formato</span></h2>
-      <p>La resolución abre condiciones; la escuela las convierte en prácticas. Hacé click en cada foco para entrar a su experiencia.</p>
+      <p>La resolución abre condiciones; la escuela las convierte en prácticas. Hacé click en cada foco para abrir la tarjeta flotante con su experiencia.</p>
       <span class="accent-bar"></span>
     </div>
     <div class="focus-grid">
-      <a href="#catedras" class="focus glass-strong reveal delay-1">
+      <div class="focus glass-strong reveal delay-1" data-float="catedras">
         <div class="ic"><span class="material-icons">groups_2</span></div>
         <h3>Cátedras compartidas</h3>
         <span class="sub">Planificar y enseñar con otros. 4 experiencias docentes.</span>
         <span class="go">Ver las 4 experiencias <span class="material-icons">arrow_forward</span></span>
-      </a>
-      <a href="#ingles" class="focus glass-strong reveal delay-2">
+      </div>
+      <div class="focus glass-strong reveal delay-2" data-float="ingles">
         <div class="ic"><span class="material-icons">translate</span></div>
         <h3>Inglés por niveles</h3>
         <span class="sub">Agrupamientos para aprender mejor, no por edad.</span>
         <span class="go">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
-      </a>
-      <a href="#jue-section" class="focus glass-strong reveal delay-3">
+      </div>
+      <div class="focus glass-strong reveal delay-3" data-float="jue">
         <div class="ic"><span class="material-icons">schedule</span></div>
         <h3>JUE + Contingencias</h3>
         <span class="sub">Continuidad pedagógica y cuidado. 4 pasos.</span>
         <span class="go">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
-      </a>
-      <a href="#capacidades" class="focus glass-strong reveal delay-4">
+      </div>
+      <div class="focus glass-strong reveal delay-4" data-float="capacidades">
         <div class="ic"><span class="material-icons">psychology</span></div>
         <h3>Capacidades</h3>
         <span class="sub">Oralidad · lectura · escritura · resolución.</span>
         <span class="go">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
-      </a>
+      </div>
     </div>
     <p class="closing-line reveal delay-5">"La innovación aparece cuando la norma se vuelve experiencia."</p>
   </div>
 </section>
 
-<section id="catedras" class="sub-section">
-  <div class="container">
-    <div class="sub-header reveal">
-      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
-      <span class="crumb">Escuela Precursora · <b>Cátedras compartidas</b></span>
-    </div>
-    <div class="section-header reveal">
+<div id="float-catedras" class="float-modal">
+  <div class="float-card glass-strong">
+    <button class="float-close" title="Cerrar"><span class="material-icons">close</span></button>
+    <button class="float-back" data-back><span class="material-icons">arrow_back</span> Volver a Precursoras</button>
+    <span class="crumb">Escuela Precursora · <b>Cátedras compartidas</b></span>
+    <div class="float-header">
       <span class="brand-chip"><span class="dot"></span>Experiencia 01 · Cátedras compartidas</span>
       <h2>Enseñar con otro<br>cambia la <span class="text-grad">pregunta</span></h2>
-      <p>No se trata de sumar docentes. Se trata de construir una escena de enseñanza compartida. Navegá entre las 4 experiencias con las pestañas.</p>
+      <p>No se trata de sumar docentes. Se trata de construir una escena de enseñanza compartida. Navegá entre las 4 experiencias con las pestañas o los botones Anterior / Siguiente.</p>
       <span class="accent-bar"></span>
     </div>
-    <div class="tabs reveal delay-1" id="catedras-tabs">
+    <div class="catedras-tabs" id="catedras-tabs">
       <button class="tab active" data-cat="nat">Ciencias Naturales</button>
       <button class="tab" data-cat="soc">Ciencias Sociales</button>
       <button class="tab" data-cat="rob">Robótica + Club de Ciencias</button>
       <button class="tab" data-cat="lengua">Lengua y Lit. + FVT</button>
     </div>
-    <div class="tab-panels reveal delay-2">
-
-      <div class="tab-panel active" data-cat="nat">
-        <div class="panel-left glass-strong">
+    <div class="catedras-panels">
+      <div class="catedras-panel active" data-cat="nat">
+        <div class="panel-left glass">
           <span class="label">Cátedra compartida 01</span>
           <h3>Ciencias Naturales</h3>
           <p class="desc">Trabajo colaborativo entre docentes para construir una escena de enseñanza compartida que articule contenidos y prácticas científicas.</p>
@@ -822,9 +882,8 @@ section {
           <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
         </div>
       </div>
-
-      <div class="tab-panel" data-cat="soc">
-        <div class="panel-left glass-strong">
+      <div class="catedras-panel" data-cat="soc">
+        <div class="panel-left glass">
           <span class="label">Cátedra compartida 02</span>
           <h3>Ciencias Sociales</h3>
           <p class="desc">Espacio preparado para integrar la producción del equipo sin romper la identidad visual.</p>
@@ -843,9 +902,8 @@ section {
           <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
         </div>
       </div>
-
-      <div class="tab-panel" data-cat="rob">
-        <div class="panel-left glass-strong">
+      <div class="catedras-panel" data-cat="rob">
+        <div class="panel-left glass">
           <span class="label">Cátedra compartida 03</span>
           <h3>Robótica + Club de Ciencias</h3>
           <p class="desc">Aprender haciendo con proyectos de robótica y exploración científica en el Club de Ciencias.</p>
@@ -864,9 +922,8 @@ section {
           <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
         </div>
       </div>
-
-      <div class="tab-panel" data-cat="lengua">
-        <div class="panel-left glass-strong">
+      <div class="catedras-panel" data-cat="lengua">
+        <div class="panel-left glass">
           <span class="label">Cátedra compartida 04</span>
           <h3>Lengua y Literatura + FVT</h3>
           <p class="desc">Articulación entre el espacio curricular y Formación para la Vida y el Trabajo.</p>
@@ -885,25 +942,23 @@ section {
           <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
         </div>
       </div>
-
     </div>
   </div>
-</section>
+</div>
 
-<section id="ingles" class="sub-section">
-  <div class="container">
-    <div class="sub-header reveal">
-      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
-      <span class="crumb">Escuela Precursora · <b>Inglés por niveles</b></span>
-    </div>
-    <div class="section-header reveal">
+<div id="float-ingles" class="float-modal">
+  <div class="float-card glass-strong">
+    <button class="float-close" title="Cerrar"><span class="material-icons">close</span></button>
+    <button class="float-back" data-back><span class="material-icons">arrow_back</span> Volver a Precursoras</button>
+    <span class="crumb">Escuela Precursora · <b>Inglés por niveles</b></span>
+    <div class="float-header">
       <span class="brand-chip"><span class="dot"></span>Experiencia 02 · Inglés por niveles</span>
       <h2>Agrupamientos para <span class="text-grad">aprender mejor</span></h2>
       <p>Docentes de Inglés organizan a los estudiantes por nivel de desempeño, no por edad. Es una experiencia precursora de la Res. 88/25.</p>
       <span class="accent-bar"></span>
     </div>
     <div class="ingles-grid">
-      <div class="ingles-left glass-strong reveal delay-1">
+      <div class="ingles-left glass">
         <span class="label">Cómo lo hacemos</span>
         <h3>Diagnóstico · agrupamiento · re-agrupamiento</h3>
         <p class="desc">Los estudiantes se agrupan por nivel para aprender mejor, no por edad. Cada docente toma a su cargo el nivel que mejor domina.</p>
@@ -913,31 +968,28 @@ section {
           <div class="paso"><div class="num">3</div><div class="body"><h4>Re-agrupamiento según progreso</h4><p>A medida que avanzan, los estudiantes pueden cambiar de grupo.</p></div></div>
         </div>
       </div>
-      <div class="ingles-right reveal delay-2">
-        <div class="panel-right" style="border: none; padding: 0;">
-          <div class="ph-icon"><span class="material-icons">translate</span></div>
-          <div class="ph-label">Zona de producción docente</div>
-          <p class="ph-text">Espacio preparado para integrar la producción del equipo: fotos • videos • producciones • capturas • voz de estudiantes. Docentes de Inglés.</p>
-        </div>
+      <div class="ingles-right">
+        <div class="ph-icon"><span class="material-icons">translate</span></div>
+        <div class="ph-label">Zona de producción docente</div>
+        <p class="ph-text">Espacio preparado para integrar la producción del equipo: fotos • videos • producciones • capturas • voz de estudiantes. Docentes de Inglés.</p>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<section id="jue-section" class="sub-section">
-  <div class="container">
-    <div class="sub-header reveal">
-      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
-      <span class="crumb">Escuela Precursora · <b>JUE + Contingencias</b></span>
-    </div>
-    <div class="section-header reveal">
+<div id="float-jue" class="float-modal">
+  <div class="float-card glass-strong">
+    <button class="float-close" title="Cerrar"><span class="material-icons">close</span></button>
+    <button class="float-back" data-back><span class="material-icons">arrow_back</span> Volver a Precursoras</button>
+    <span class="crumb">Escuela Precursora · <b>JUE + Contingencias</b></span>
+    <div class="float-header">
       <span class="brand-chip"><span class="dot"></span>Experiencia 03 · Jornada Única Escolar</span>
       <h2>Una ausencia docente no es<br>una <span class="text-grad">ausencia de aprendizaje</span></h2>
       <p>Memo Conjunto 13/2026: permanencia, cuidado integral y continuidad pedagógica.</p>
       <span class="accent-bar"></span>
     </div>
     <div class="jue-grid">
-      <div class="jue-left glass-strong reveal delay-1">
+      <div class="jue-left glass">
         <span class="label">Cómo sostenemos la continuidad</span>
         <h3>4 pasos para que el tiempo siga siendo pedagógico</h3>
         <p class="desc">Cuando falta un docente, no cubrimos una hora: sostenemos una trayectoria.</p>
@@ -949,113 +1001,76 @@ section {
         </div>
         <p class="quote">"No cubrimos una hora. Sostenemos una trayectoria."</p>
       </div>
-      <div class="jue-right reveal delay-2">
-        <div class="panel-right" style="border: none; padding: 0;">
-          <div class="ph-icon"><span class="material-icons">schedule</span></div>
-          <div class="ph-label">Zona de producción docente</div>
-          <p class="ph-text">Quién habla: Coordinadora + Preceptora. La directora cede la palabra. La programadora mantiene el control del tablero. Objetivo: mostrar práctica, no describirla.</p>
-        </div>
+      <div class="jue-right">
+        <div class="ph-icon"><span class="material-icons">schedule</span></div>
+        <div class="ph-label">Zona de producción docente</div>
+        <p class="ph-text">Quién habla: Coordinadora + Preceptora. La directora cede la palabra. La programadora mantiene el control del tablero. Objetivo: mostrar práctica, no describirla.</p>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<section id="capacidades" class="sub-section">
-  <div class="container">
-    <div class="sub-header reveal">
-      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
-      <span class="crumb">Escuela Precursora · <b>Capacidades</b></span>
-    </div>
-    <div class="section-header reveal">
+<div id="float-capacidades" class="float-modal">
+  <div class="float-card glass-strong">
+    <button class="float-close" title="Cerrar"><span class="material-icons">close</span></button>
+    <button class="float-back" data-back><span class="material-icons">arrow_back</span> Volver a Precursoras</button>
+    <span class="crumb">Escuela Precursora · <b>Capacidades</b></span>
+    <div class="float-header">
       <span class="brand-chip"><span class="dot"></span>Experiencia 04 · Capacidades fundamentales</span>
       <h2>Oralidad · lectura · escritura<br><span class="text-grad">+ resolución</span></h2>
       <p>Las cuatro capacidades que el PMI prioriza como foco transversal. No son contenidos de Lengua: atraviesan toda la escuela.</p>
       <span class="accent-bar"></span>
     </div>
     <div class="cap-grid">
-      <div class="cap glass-strong reveal delay-1"><div class="ic"><span class="material-icons">record_voice_over</span></div><h3>ORALIDAD</h3><span class="sub">Expresar ideas, argumentar, comunicar procedimientos frente a otros.</span></div>
-      <div class="cap glass-strong reveal delay-2"><div class="ic"><span class="material-icons">menu_book</span></div><h3>LECTURA</h3><span class="sub">Comprender consignas, sostener textos, interpretar información, seleccionar fuentes.</span></div>
-      <div class="cap glass-strong reveal delay-3"><div class="ic"><span class="material-icons">edit_note</span></div><h3>ESCRITURA</h3><span class="sub">Organizar ideas, producir respuestas y distintos formatos textuales.</span></div>
-      <div class="cap glass-strong reveal delay-4"><div class="ic"><span class="material-icons">psychology</span></div><h3>RESOLUCIÓN</h3><span class="sub">Cuestionar el sentido común, desnaturalizar, fundamentar soluciones.</span></div>
+      <div class="cap glass"><div class="ic"><span class="material-icons">record_voice_over</span></div><h3>ORALIDAD</h3><span class="sub">Expresar ideas, argumentar, comunicar procedimientos frente a otros.</span></div>
+      <div class="cap glass"><div class="ic"><span class="material-icons">menu_book</span></div><h3>LECTURA</h3><span class="sub">Comprender consignas, sostener textos, interpretar información, seleccionar fuentes.</span></div>
+      <div class="cap glass"><div class="ic"><span class="material-icons">edit_note</span></div><h3>ESCRITURA</h3><span class="sub">Organizar ideas, producir respuestas y distintos formatos textuales.</span></div>
+      <div class="cap glass"><div class="ic"><span class="material-icons">psychology</span></div><h3>RESOLUCIÓN</h3><span class="sub">Cuestionar el sentido común, desnaturalizar, fundamentar soluciones.</span></div>
     </div>
-    <p class="closing-line reveal delay-5">"La innovación aparece cuando la norma se vuelve experiencia."</p>
+    <p class="cap-closing">"La innovación aparece cuando la norma se vuelve experiencia."</p>
   </div>
-</section>
+</div>
 
 <section id="catalogo">
   <div class="container">
     <div class="section-header reveal">
       <span class="brand-chip"><span class="dot"></span>Cuadernillo 2026</span>
       <h2>Transformar una contingencia en <span class="text-grad">oportunidad de aprendizaje</span></h2>
-      <p>Actividades breves, dinámicas y significativas para sostener el tiempo escolar. Hacé click en cada actividad para ver la dinámica completa.</p>
+      <p>Actividades breves, dinámicas y significativas para sostener el tiempo escolar. El cuadernillo organiza las actividades en 7 focos.</p>
       <span class="accent-bar"></span>
     </div>
-    <div class="bento">
-      
-      <div class="tile glass reveal delay-1" data-activity="minuto">
-        <div class="ic"><span class="material-icons">timer</span></div>
-        <h3>EL MINUTO LOCO</h3>
-        <span class="eje">Oralidad y creatividad</span>
-        <p>Cada grupo habla 1 minuto sobre un tema asignado. Se vota la idea más creativa o convincente.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-2" data-activity="detectives">
-        <div class="ic"><span class="material-icons">travel_explore</span></div>
-        <h3>DETECTIVES DE NOTICIAS</h3>
-        <span class="eje">Lectura y pensamiento crítico</span>
-        <p>Leer una noticia breve y analizarla con preguntas guía.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-3" data-activity="app">
-        <div class="ic"><span class="material-icons">smartphone</span></div>
-        <h3>SI FUERA UNA APP</h3>
-        <span class="eje">Escritura y tecnología</span>
-        <p>Pensar un problema cotidiano y transformarlo en una app.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-1" data-activity="logico">
-        <div class="ic"><span class="material-icons">extension</span></div>
-        <h3>DESAFÍO LÓGICO</h3>
-        <span class="eje">Resolución de problemas</span>
-        <p>Resolver acertijos en equipo y justificar la respuesta.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-2" data-activity="basura">
-        <div class="ic"><span class="material-icons">recycling</span></div>
-        <h3>BASURA QUE VALE</h3>
-        <span class="eje">Economía circular</span>
-        <p>Elegir un objeto descartado y darle un nuevo uso.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-3" data-activity="volante">
-        <div class="ic"><span class="material-icons">directions_car</span></div>
-        <h3>DECISIONES AL VOLANTE</h3>
-        <span class="eje">Educación vial</span>
-        <p>Analizar situaciones de tránsito y decidir qué hacer.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-1" data-activity="que-harias">
-        <div class="ic"><span class="material-icons">forum</span></div>
-        <h3>¿QUÉ HARÍAS SI…?</h3>
-        <span class="eje">Convivencia escolar</span>
-        <p>Resolver situaciones de convivencia en grupo.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-2" data-activity="solucion">
-        <div class="ic"><span class="material-icons">lightbulb</span></div>
-        <h3>CREÁ UNA SOLUCIÓN</h3>
-        <span class="eje">Integrador</span>
-        <p>Diseñar una solución que combine tecnología, convivencia e impacto social.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
-      </div>
-      <div class="tile glass reveal delay-3" data-activity="cita">
-        <div class="ic"><span class="material-icons">menu_book</span></div>
-        <h3>CITA A CIEGAS CON UN LIBRO</h3>
-        <span class="eje">Lectura + curiosidad</span>
-        <p>Libros envueltos con pistas: elegís sin ver la tapa y descubrís una historia.</p>
-        <div class="more"><span class="material-icons" style="font-size: 14px;">arrow_forward</span>Ver dinámica completa</div>
+
+    <div class="focos-block reveal delay-1">
+      <p class="focos-label">· Focos del cuadernillo · 7 ejes ·</p>
+      <div class="focos-grid">
+        <div class="foco glass"><div class="ic"><span class="material-icons">record_voice_over</span></div><h3>Oralidad</h3><span class="sub">Hablar, exponer, argumentar frente a otros.</span></div>
+        <div class="foco glass"><div class="ic"><span class="material-icons">menu_book</span></div><h3>Lectura + escritura</h3><span class="sub">Comprender, interpretar y producir textos.</span></div>
+        <div class="foco glass"><div class="ic"><span class="material-icons">extension</span></div><h3>Resolución de problemas</h3><span class="sub">Cuestionar, desnaturalizar, fundamentar.</span></div>
+        <div class="foco glass"><div class="ic"><span class="material-icons">psychology</span></div><h3>Pensamiento crítico</h3><span class="sub">Evaluar argumentos, fundamentar posturas.</span></div>
+        <div class="foco glass"><div class="ic"><span class="material-icons">groups</span></div><h3>Convivencia</h3><span class="sub">Construir acuerdos, resolver conflictos.</span></div>
+        <div class="foco glass"><div class="ic"><span class="material-icons">directions_car</span></div><h3>Educación vial</h3><span class="sub">Decisiones responsables en la vía pública.</span></div>
+        <div class="foco glass"><div class="ic"><span class="material-icons">recycling</span></div><h3>Economía circular</h3><span class="sub">Reusar, reciclar, dar nueva vida a los objetos.</span></div>
+        <div class="foco glass" style="background: linear-gradient(135deg, rgba(167,139,250,0.10), rgba(244,114,182,0.04));"><div class="ic"><span class="material-icons">auto_awesome</span></div><h3>+ Curiosidad</h3><span class="sub">El hilo que atraviesa todas las actividades.</span></div>
       </div>
     </div>
+
+    <div class="ejemplos-block glass-strong reveal delay-2">
+      <p class="lbl">· Ejemplos de actividades ·</p>
+      <div class="lista">
+        <span class="ej"><span class="material-icons">timer</span>El minuto loco</span>
+        <span class="ej"><span class="material-icons">travel_explore</span>Detectives de noticias</span>
+        <span class="ej"><span class="material-icons">smartphone</span>Si fuera una app</span>
+        <span class="ej"><span class="material-icons">forum</span>¿Qué harías si…?</span>
+      </div>
+    </div>
+
+    <div class="pdf-block glass-strong reveal delay-3">
+      <div class="pdf-ic"><span class="material-icons">picture_as_pdf</span></div>
+      <h3>Cuadernillo de Contingencia 2026</h3>
+      <p class="pdf-sub">Acceso rápido al PDF completo del cuadernillo. En el equipo de presentación, este botón puede abrir el documento con todas las actividades detalladas.</p>
+      <a href="#" class="pdf-btn" id="pdf-btn">Abrir PDF <span class="material-icons">open_in_new</span></a>
+    </div>
+
   </div>
 </section>
 
@@ -1144,7 +1159,7 @@ document.querySelectorAll('[data-count-to]').forEach(el => countObserver.observe
 // Scroll progress + topnav
 const progress = document.getElementById('progress');
 const topnav = document.getElementById('topnav');
-const sections = ['hero','sep-1','identidad','adn','pei','pmi','aec','regimen','jornada','sep-2','precursora','catedras','ingles','jue-section','capacidades','catalogo','cierre'];
+const sections = ['hero','sep-1','identidad','adn','pei','pmi','aec','regimen','jornada','sep-2','precursora','catalogo','cierre'];
 const navLinks = document.querySelectorAll('#topnav .nav-link');
 
 function onScroll() {
@@ -1179,7 +1194,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // Tilt 3D on cards (skip tiles that open modals to avoid weird behavior)
-document.querySelectorAll('.glass:not(.tile):not(.panel-tile):not(.panel-tile-2)').forEach(card => {
+document.querySelectorAll('.glass:not(.tile):not(.panel-tile):not(.panel-tile-2):not(.float-card .glass):not(.float-card)').forEach(card => {
   card.addEventListener('mousemove', (e) => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -1189,53 +1204,55 @@ document.querySelectorAll('.glass:not(.tile):not(.panel-tile):not(.panel-tile-2)
   card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 
-// Modal: actividades
-const modal = document.getElementById('modal');
+// ===== MODALES FLOTANTES (Cátedras, Inglés, JUE, Capacidades) =====
+// Abrir modal desde Precursora
+document.querySelectorAll('#precursora .focus[data-float]').forEach(focus => {
+  focus.addEventListener('click', () => {
+    const id = 'float-' + focus.dataset.float;
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      // Reset Cátedras tabs al abrir
+      if (id === 'float-catedras') showCatedra('nat');
+    }
+  });
+});
 
-function openActivityModal(id) {
-  const a = ACTIVITIES.find(x => x.id === id);
-  if (!a) return;
-  document.getElementById('modal-icon').textContent = a.icon;
-  document.getElementById('modal-type').textContent = 'Actividad · Cuadernillo 2026';
-  document.getElementById('modal-title').textContent = a.name;
-  document.getElementById('modal-desc').textContent = a.short;
-  document.getElementById('modal-section-que').style.display = 'none';
-  const listSection = document.getElementById('modal-section-list');
-  listSection.style.display = 'block';
-  document.getElementById('modal-list-title').textContent = 'Temas sugeridos';
-  document.getElementById('modal-list').innerHTML = a.temas.map(t => `<li>${t}</li>`).join('');
-  document.getElementById('modal-placeholder-text').textContent = 'Fotos • videos • producciones • capturas • voz de estudiantes';
-  document.getElementById('modal-meta-tipo').textContent = a.eje;
-  document.getElementById('modal-meta-foco').textContent = a.cierre;
-  document.getElementById('modal-meta-quien').textContent = a.tiempo;
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
+// Cerrar modal (con la X)
+document.querySelectorAll('.float-close').forEach(btn => {
+  btn.addEventListener('click', () => closeFloatModal(btn.closest('.float-modal')));
+});
+// Volver a Precursoras (botón dentro del modal)
+document.querySelectorAll('.float-back[data-back]').forEach(btn => {
+  btn.addEventListener('click', () => closeFloatModal(btn.closest('.float-modal')));
+});
+// Click en el backdrop (fuera de la card) también cierra
+document.querySelectorAll('.float-modal').forEach(m => {
+  m.addEventListener('click', (e) => {
+    if (e.target === m) closeFloatModal(m);
+  });
+});
+
+function closeFloatModal(modal) {
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-function openExperienciaModal(id) {
-  const e = EXPERIENCIAS.find(x => x.id === id);
-  if (!e) return;
-  document.getElementById('modal-icon').textContent = e.icon;
-  document.getElementById('modal-type').textContent = e.tipo;
-  document.getElementById('modal-title').textContent = e.name;
-  document.getElementById('modal-desc').textContent = e.short;
-  document.getElementById('modal-section-que').style.display = 'block';
-  document.getElementById('modal-que').textContent = e.que_hacemos;
-  document.getElementById('modal-section-list').style.display = 'none';
-  document.getElementById('modal-placeholder-text').textContent = 'Espacio preparado para integrar la producción del equipo: ' + e.focus + '.';
-  document.getElementById('modal-meta-tipo').textContent = e.tipo;
-  document.getElementById('modal-meta-foco').textContent = 'Práctica';
-  document.getElementById('modal-meta-quien').textContent = 'Equipo docente';
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+// Escape cierra cualquier modal flotante abierto
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.float-modal.open').forEach(m => closeFloatModal(m));
+  }
+});
 
-// Cátedras: tabs internas (navegación entre las 4 experiencias)
+// ===== Cátedras: tabs internas (navegación entre las 4 experiencias dentro del modal flotante) =====
 function showCatedra(cat) {
   document.querySelectorAll('#catedras-tabs .tab').forEach(t => {
     t.classList.toggle('active', t.dataset.cat === cat);
   });
-  document.querySelectorAll('#catedras .tab-panel').forEach(p => {
+  document.querySelectorAll('#float-catedras .catedras-panel').forEach(p => {
     p.classList.toggle('active', p.dataset.cat === cat);
   });
 }
@@ -1243,26 +1260,28 @@ document.querySelectorAll('#catedras-tabs .tab').forEach(tab => {
   tab.addEventListener('click', () => showCatedra(tab.dataset.cat));
 });
 // Botones "Anterior / Siguiente" dentro de cada panel
-document.querySelectorAll('#catedras .nav-btn[data-cat-next]').forEach(btn => {
+document.querySelectorAll('#float-catedras .nav-btn[data-cat-next]').forEach(btn => {
   btn.addEventListener('click', () => showCatedra(btn.dataset.catNext));
 });
-document.querySelectorAll('#catedras .nav-btn[data-cat-prev]').forEach(btn => {
+document.querySelectorAll('#float-catedras .nav-btn[data-cat-prev]').forEach(btn => {
   btn.addEventListener('click', () => showCatedra(btn.dataset.catPrev));
 });
 
-function closeModal() {
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.querySelectorAll('#catalogo .tile').forEach(tile => {
-  tile.addEventListener('click', () => openActivityModal(tile.dataset.activity));
+// ===== Tilt 3D en las tarjetas flotantes =====
+document.querySelectorAll('.float-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(1200px) rotateX(${ -y * 2.5 }deg) rotateY(${ x * 2.5 }deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 
-modal.querySelector('.modal-close').addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+// PDF button (placeholder — abre el PDF del cuadernillo cuando esté disponible)
+document.getElementById('pdf-btn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  alert('Cuando subas el PDF del Cuadernillo de Contingencia 2026, lo voy a enlazar acá.');
 });
 
 console.log('✅ Expedición Escuelas Precursoras · ProA Río Seco 2026');
