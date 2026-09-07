@@ -489,6 +489,40 @@ section {
 /* Mantengo el .bento viejo por si se referencia en JS, pero no se usa */
 #catalogo .bento { display: none; }
 
+/* PDF Modal (float) */
+.float-modal-pdf {}
+.float-modal-pdf .pdf-card {
+  max-width: 1100px; width: 100%; max-height: 92vh;
+  padding: 24px 32px 32px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.float-modal-pdf .pdf-viewer-wrap {
+  position: relative;
+  flex: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #2A2440;
+  min-height: 60vh;
+}
+.float-modal-pdf .pdf-viewer-wrap iframe {
+  width: 100%; height: 100%; min-height: 60vh; border: none; display: block;
+}
+.float-modal-pdf .pdf-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  background: var(--bg-2);
+  color: var(--text-2);
+  text-align: center; padding: 32px;
+  pointer-events: none;
+  opacity: 0;
+}
+.float-modal-pdf .pdf-viewer-wrap:not(:has(iframe)) .pdf-fallback,
+.float-modal-pdf.no-pdf-support .pdf-fallback {
+  pointer-events: auto;
+  opacity: 1;
+}
+
 /* Modal */
 #modal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 40px; background: rgba(15, 10, 30, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 #modal.open { display: flex; animation: fadeIn 0.25s ease; }
@@ -1067,12 +1101,26 @@ section {
     <div class="pdf-block glass-strong reveal delay-3">
       <div class="pdf-ic"><span class="material-icons">picture_as_pdf</span></div>
       <h3>Cuadernillo de Contingencia 2026</h3>
-      <p class="pdf-sub">Acceso rápido al PDF completo del cuadernillo. En el equipo de presentación, este botón puede abrir el documento con todas las actividades detalladas.</p>
-      <a href="#" class="pdf-btn" id="pdf-btn">Abrir PDF <span class="material-icons">open_in_new</span></a>
+      <p class="pdf-sub">Acceso rápido al PDF completo del cuadernillo. En el equipo de presentación, este botón abre el documento con todas las actividades detalladas en un visor flotante.</p>
+      <button class="pdf-btn" id="pdf-btn">Abrir PDF <span class="material-icons">open_in_new</span></button>
     </div>
 
   </div>
 </section>
+
+<div id="float-pdf" class="float-modal float-modal-pdf">
+  <div class="float-card pdf-card glass-strong">
+    <button class="float-close" title="Cerrar"><span class="material-icons">close</span></button>
+    <button class="float-back" data-back data-pdf-close><span class="material-icons">arrow_back</span> Volver al Cuadernillo</button>
+    <div class="pdf-viewer-wrap">
+      <iframe src="cuadernillo-2026.pdf" title="Cuadernillo de Contingencia 2026" allow="fullscreen"></iframe>
+      <div class="pdf-fallback">
+        <p>Tu navegador no puede mostrar el PDF embebido.</p>
+        <a href="cuadernillo-2026.pdf" target="_blank" rel="noopener" style="color: var(--accent); font-family: var(--font-num); text-decoration: none;">Abrir en pestaña nueva ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section id="cierre">
   <div class="bg-grid"></div>
@@ -1267,8 +1315,8 @@ document.querySelectorAll('#float-catedras .nav-btn[data-cat-prev]').forEach(btn
   btn.addEventListener('click', () => showCatedra(btn.dataset.catPrev));
 });
 
-// ===== Tilt 3D en las tarjetas flotantes =====
-document.querySelectorAll('.float-card').forEach(card => {
+// ===== Tilt 3D en las tarjetas flotantes (excepto el PDF, que tiene un iframe adentro) =====
+document.querySelectorAll('.float-card:not(.pdf-card)').forEach(card => {
   card.addEventListener('mousemove', (e) => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -1278,11 +1326,24 @@ document.querySelectorAll('.float-card').forEach(card => {
   card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 
-// PDF button (placeholder — abre el PDF del cuadernillo cuando esté disponible)
-document.getElementById('pdf-btn')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  alert('Cuando subas el PDF del Cuadernillo de Contingencia 2026, lo voy a enlazar acá.');
-});
+// PDF button — abre modal flotante con iframe embebido
+const pdfBtn = document.getElementById('pdf-btn');
+const pdfModal = document.getElementById('float-pdf');
+if (pdfBtn && pdfModal) {
+  pdfBtn.addEventListener('click', () => {
+    pdfModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+}
+// El botón "Volver al Cuadernillo" del modal del PDF también lo cierra
+if (pdfModal) {
+  pdfModal.querySelectorAll('[data-pdf-close], .float-close').forEach(btn => {
+    btn.addEventListener('click', () => closeFloatModal(pdfModal));
+  });
+  pdfModal.addEventListener('click', (e) => {
+    if (e.target === pdfModal) closeFloatModal(pdfModal);
+  });
+}
 
 console.log('✅ Expedición Escuelas Precursoras · ProA Río Seco 2026');
 </script>
