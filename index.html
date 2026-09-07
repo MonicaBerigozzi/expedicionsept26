@@ -290,35 +290,123 @@ section {
 /* PRECURSORA */
 #precursora { background: var(--bg-2); }
 #precursora .focus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
-#precursora .focus { padding: 28px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; transition: transform 0.3s ease, border-color 0.3s ease; }
-#precursora .focus:hover { transform: translateY(-4px); border-color: var(--accent); }
-#precursora .focus .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
-#precursora .focus .ic .material-icons { color: var(--accent); font-size: 24px; }
+#precursora .focus {
+  padding: 28px; display: flex; flex-direction: column; gap: 8px; min-height: 220px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none; color: inherit;
+  position: relative;
+}
+#precursora .focus:hover { transform: translateY(-6px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 32px rgba(244,114,182,0.18); }
+#precursora .focus .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; transition: all 0.3s ease; }
+#precursora .focus:hover .ic { background: linear-gradient(135deg, var(--primary), var(--accent)); }
+#precursora .focus:hover .ic .material-icons { color: var(--bg); }
+#precursora .focus .ic .material-icons { color: var(--accent); font-size: 24px; transition: color 0.3s ease; }
 #precursora .focus h3 { font-family: var(--font-heading); font-size: 16px; color: var(--text); font-weight: 700; line-height: 1.3; }
-#precursora .focus .sub { font-size: 13px; color: var(--text-2); line-height: 1.45; }
+#precursora .focus .sub { font-size: 13px; color: var(--text-2); line-height: 1.45; flex: 1; }
+#precursora .focus .go { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-top: 8px; }
+#precursora .focus .go .material-icons { font-size: 16px; transition: transform 0.2s ease; }
+#precursora .focus:hover .go .material-icons { transform: translateX(4px); }
 #precursora .closing-line { font-size: 18px; color: var(--text); margin-top: 40px; text-align: center; font-style: italic; max-width: 900px; margin-left: auto; margin-right: auto; }
 
-/* PANEL INTERACTIVO */
-#panel { background: var(--bg); }
-#panel .panel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
-#panel .panel-tile { padding: 28px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease; position: relative; min-height: 240px; }
-#panel .panel-tile:hover { transform: translateY(-6px) scale(1.02); border-color: var(--accent); box-shadow: 0 12px 32px rgba(244,114,182,0.18); }
-#panel .panel-tile .num { font-family: var(--font-num); font-size: 14px; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
-#panel .panel-tile h3 { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-weight: 700; line-height: 1.2; }
-#panel .panel-tile .sub { font-size: 14px; color: var(--text-2); line-height: 1.4; flex: 1; }
-#panel .panel-tile .open { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-top: auto; }
-#panel .panel-tile .open .material-icons { font-size: 16px; transition: transform 0.2s ease; }
-#panel .panel-tile:hover .open .material-icons { transform: translateX(4px); }
-#panel .panel-grid-2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px; }
-#panel .panel-tile-2 { padding: 22px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease; min-height: 160px; }
-#panel .panel-tile-2:hover { transform: translateY(-4px); border-color: var(--accent); }
-#panel .panel-tile-2 .ic { width: 36px; height: 36px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-#panel .panel-tile-2:hover .ic { background: linear-gradient(135deg, var(--primary), var(--accent)); border-color: transparent; }
-#panel .panel-tile-2 .ic .material-icons { color: var(--accent); font-size: 20px; transition: color 0.3s ease; }
-#panel .panel-tile-2:hover .ic .material-icons { color: var(--bg); }
-#panel .panel-tile-2 h4 { font-family: var(--font-heading); font-size: 14px; color: var(--text); font-weight: 700; line-height: 1.25; }
-#panel .panel-tile-2 .open { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-num); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-top: auto; font-weight: 700; }
-#panel .closing-line { font-size: 13px; color: var(--text-muted); margin-top: 24px; text-align: center; font-style: italic; }
+/* SUB-SECCIONES (catedras, ingles, jue, capacidades) */
+.sub-section { background: var(--bg); position: relative; padding-top: 100px; }
+.sub-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  z-index: 3;
+}
+.sub-section .sub-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.sub-section .sub-header .back {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--glass); color: var(--text-2); cursor: pointer;
+  font-family: var(--font-num); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s ease;
+}
+.sub-section .sub-header .back:hover { border-color: var(--accent); color: var(--accent); }
+.sub-section .sub-header .back .material-icons { font-size: 16px; }
+.sub-section .sub-header .crumb { font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
+.sub-section .sub-header .crumb b { color: var(--accent); font-weight: 700; }
+.sub-section .section-header { margin-bottom: 32px; }
+.sub-section .section-header h2 { font-size: clamp(32px, 4vw, 48px); }
+
+/* Cátedras: tabs internas */
+#catedras .tabs {
+  display: flex; gap: 8px; margin-top: 36px; padding: 8px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--glass); width: max-content; max-width: 100%; overflow-x: auto;
+}
+#catedras .tab {
+  padding: 10px 18px; border-radius: 999px; background: transparent; border: none;
+  color: var(--text-muted); cursor: pointer;
+  font-family: var(--font-num); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all 0.2s ease; white-space: nowrap; font-weight: 600;
+}
+#catedras .tab:hover { color: var(--text); background: var(--glass-strong); }
+#catedras .tab.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-weight: 700; }
+#catedras .tab-panels { margin-top: 32px; position: relative; min-height: 360px; }
+#catedras .tab-panel { display: none; flex-direction: column; gap: 24px; animation: fadeIn 0.4s ease; }
+#catedras .tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+#catedras .panel-left { padding: 32px; display: flex; flex-direction: column; gap: 14px; }
+#catedras .panel-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+#catedras .panel-left h3 { font-family: var(--font-heading); font-size: 26px; color: var(--text); font-weight: 700; line-height: 1.2; }
+#catedras .panel-left .desc { font-size: 15px; color: var(--text-2); line-height: 1.55; }
+#catedras .panel-left .que-hacemos { margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+#catedras .panel-left .que-hacemos .qlbl { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin-bottom: 6px; display: block; }
+#catedras .panel-left .que-hacemos p { font-size: 14px; color: var(--text-2); line-height: 1.5; }
+#catedras .panel-left .nav-between { display: flex; gap: 10px; margin-top: auto; padding-top: 16px; }
+#catedras .panel-left .nav-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--glass); color: var(--text-2); cursor: pointer;
+  font-family: var(--font-num); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+#catedras .panel-left .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+#catedras .panel-left .nav-btn .material-icons { font-size: 16px; }
+#catedras .panel-right { padding: 32px; border: 2px dashed var(--line-strong); border-radius: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 340px; justify-content: center; align-items: center; text-align: center; }
+#catedras .panel-right .ph-label { font-family: var(--font-num); font-size: 13px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+#catedras .panel-right .ph-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--glass); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+#catedras .panel-right .ph-icon .material-icons { color: var(--primary); font-size: 28px; }
+#catedras .panel-right .ph-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; max-width: 360px; }
+
+/* Inglés por niveles */
+#ingles .ingles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+#ingles .ingles-left { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+#ingles .ingles-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+#ingles .ingles-left h3 { font-family: var(--font-heading); font-size: 24px; color: var(--text); font-weight: 700; }
+#ingles .ingles-left .desc { font-size: 15px; color: var(--text-2); line-height: 1.55; }
+#ingles .ingles-left .pasos { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+#ingles .ingles-left .paso { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
+#ingles .ingles-left .paso .num { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 13px; color: var(--accent); font-weight: 700; }
+#ingles .ingles-left .paso .body h4 { font-family: var(--font-heading); font-size: 15px; color: var(--text); font-weight: 600; margin: 0; }
+#ingles .ingles-left .paso .body p { font-size: 13px; color: var(--text-2); line-height: 1.45; margin: 2px 0 0 0; }
+#ingles .ingles-right { padding: 32px; border: 2px dashed var(--line-strong); border-radius: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 340px; justify-content: center; align-items: center; text-align: center; }
+
+/* JUE + Contingencias */
+#jue-section .jue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+#jue-section .jue-left { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+#jue-section .jue-left .label { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
+#jue-section .jue-left h3 { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-weight: 700; line-height: 1.3; }
+#jue-section .jue-left .desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+#jue-section .jue-left .steps4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+#jue-section .jue-left .step4 { display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
+#jue-section .jue-left .step4 .n { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: var(--font-num); font-size: 14px; color: var(--bg); font-weight: 700; }
+#jue-section .jue-left .step4 .t { font-family: var(--font-heading); font-size: 11px; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+#jue-section .jue-left .step4 .d { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
+#jue-section .jue-left .quote { margin-top: 16px; padding: 16px; border-left: 3px solid var(--accent); font-style: italic; font-size: 14px; color: var(--text); background: var(--glass); border-radius: 0 8px 8px 0; }
+#jue-section .jue-right { padding: 32px; border: 2px dashed var(--line-strong); border-radius: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 340px; justify-content: center; align-items: center; text-align: center; }
+
+/* Capacidades */
+#capacidades .cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+#capacidades .cap { padding: 28px; display: flex; flex-direction: column; gap: 10px; min-height: 180px; transition: transform 0.3s ease, border-color 0.3s ease; }
+#capacidades .cap:hover { transform: translateY(-4px); border-color: var(--accent); }
+#capacidades .cap .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; }
+#capacidades .cap .ic .material-icons { color: var(--accent); font-size: 24px; }
+#capacidades .cap h3 { font-family: var(--font-heading); font-size: 18px; color: var(--text); font-weight: 700; }
+#capacidades .cap .sub { font-size: 13px; color: var(--text-2); line-height: 1.4; }
+#capacidades .closing-line { font-size: 17px; color: var(--text); margin-top: 40px; text-align: center; font-style: italic; max-width: 900px; margin-left: auto; margin-right: auto; }
 
 /* CATALOGO */
 #catalogo { background: var(--bg-2); }
@@ -419,7 +507,10 @@ section {
   <a href="#regimen" class="nav-link" data-target="regimen">Régimen</a>
   <a href="#jornada" class="nav-link" data-target="jornada">Jornada</a>
   <a href="#precursora" class="nav-link" data-target="precursora">Precursora</a>
-  <a href="#panel" class="nav-link" data-target="panel">Panel</a>
+  <a href="#catedras" class="nav-link" data-target="catedras">Cátedras</a>
+  <a href="#ingles" class="nav-link" data-target="ingles">Inglés</a>
+  <a href="#jue-section" class="nav-link" data-target="jue-section">JUE</a>
+  <a href="#capacidades" class="nav-link" data-target="capacidades">Capacidades</a>
   <a href="#catalogo" class="nav-link" data-target="catalogo">Cuadernillo</a>
   <a href="#cierre" class="nav-link" data-target="cierre">Cierre</a>
 </nav>
@@ -658,48 +749,236 @@ section {
     <div class="section-header reveal">
       <span class="brand-chip"><span class="dot"></span>Escuela Precursora · Res. 88/25</span>
       <h2>Transformar la enseñanza,<br>no solo el <span class="text-grad">formato</span></h2>
-      <p>La resolución abre condiciones; la escuela las convierte en prácticas.</p>
+      <p>La resolución abre condiciones; la escuela las convierte en prácticas. Hacé click en cada foco para entrar a su experiencia.</p>
       <span class="accent-bar"></span>
     </div>
     <div class="focus-grid">
-      <div class="focus glass reveal delay-1"><div class="ic"><span class="material-icons">groups_2</span></div><h3>Cátedras compartidas</h3><span class="sub">Planificar y enseñar con otros.</span></div>
-      <div class="focus glass reveal delay-2"><div class="ic"><span class="material-icons">translate</span></div><h3>Inglés por niveles</h3><span class="sub">Agrupamientos para aprender mejor.</span></div>
-      <div class="focus glass reveal delay-3"><div class="ic"><span class="material-icons">schedule</span></div><h3>JUE</h3><span class="sub">Continuidad pedagógica y cuidado.</span></div>
-      <div class="focus glass reveal delay-4"><div class="ic"><span class="material-icons">psychology</span></div><h3>Capacidades</h3><span class="sub">Oralidad · lectura · escritura · resolución.</span></div>
+      <a href="#catedras" class="focus glass-strong reveal delay-1">
+        <div class="ic"><span class="material-icons">groups_2</span></div>
+        <h3>Cátedras compartidas</h3>
+        <span class="sub">Planificar y enseñar con otros. 4 experiencias docentes.</span>
+        <span class="go">Ver las 4 experiencias <span class="material-icons">arrow_forward</span></span>
+      </a>
+      <a href="#ingles" class="focus glass-strong reveal delay-2">
+        <div class="ic"><span class="material-icons">translate</span></div>
+        <h3>Inglés por niveles</h3>
+        <span class="sub">Agrupamientos para aprender mejor, no por edad.</span>
+        <span class="go">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
+      </a>
+      <a href="#jue-section" class="focus glass-strong reveal delay-3">
+        <div class="ic"><span class="material-icons">schedule</span></div>
+        <h3>JUE + Contingencias</h3>
+        <span class="sub">Continuidad pedagógica y cuidado. 4 pasos.</span>
+        <span class="go">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
+      </a>
+      <a href="#capacidades" class="focus glass-strong reveal delay-4">
+        <div class="ic"><span class="material-icons">psychology</span></div>
+        <h3>Capacidades</h3>
+        <span class="sub">Oralidad · lectura · escritura · resolución.</span>
+        <span class="go">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
+      </a>
     </div>
     <p class="closing-line reveal delay-5">"La innovación aparece cuando la norma se vuelve experiencia."</p>
   </div>
 </section>
 
-<section id="panel">
+<section id="catedras" class="sub-section">
   <div class="container">
+    <div class="sub-header reveal">
+      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
+      <span class="crumb">Escuela Precursora · <b>Cátedras compartidas</b></span>
+    </div>
     <div class="section-header reveal">
-      <span class="brand-chip"><span class="dot"></span>Panel interactivo</span>
-      <h2>La práctica <span class="text-grad">habla</span></h2>
-      <p>Cada equipo entra a su propia experiencia sin cortar el ritmo. Tocá cada panel para abrir el detalle.</p>
+      <span class="brand-chip"><span class="dot"></span>Experiencia 01 · Cátedras compartidas</span>
+      <h2>Enseñar con otro<br>cambia la <span class="text-grad">pregunta</span></h2>
+      <p>No se trata de sumar docentes. Se trata de construir una escena de enseñanza compartida. Navegá entre las 4 experiencias con las pestañas.</p>
       <span class="accent-bar"></span>
     </div>
-    <div class="panel-grid">
-      <div class="panel-tile glass-strong reveal delay-1" data-experiencia="nat">
-        <span class="num">01 · Cátedras compartidas</span>
-        <h3>Enseñar con otro<br>cambia la pregunta</h3>
-        <p class="sub">No se trata de sumar docentes. Se trata de construir una escena de enseñanza compartida.</p>
-        <span class="open">4 experiencias docentes <span class="material-icons">arrow_forward</span></span>
+    <div class="tabs reveal delay-1" id="catedras-tabs">
+      <button class="tab active" data-cat="nat">Ciencias Naturales</button>
+      <button class="tab" data-cat="soc">Ciencias Sociales</button>
+      <button class="tab" data-cat="rob">Robótica + Club de Ciencias</button>
+      <button class="tab" data-cat="lengua">Lengua y Lit. + FVT</button>
+    </div>
+    <div class="tab-panels reveal delay-2">
+
+      <div class="tab-panel active" data-cat="nat">
+        <div class="panel-left glass-strong">
+          <span class="label">Cátedra compartida 01</span>
+          <h3>Ciencias Naturales</h3>
+          <p class="desc">Trabajo colaborativo entre docentes para construir una escena de enseñanza compartida que articule contenidos y prácticas científicas.</p>
+          <div class="que-hacemos">
+            <span class="qlbl">Qué hacemos</span>
+            <p>Planificación conjunta y enseñanza simultánea con otros docentes del equipo. Articulación de unidades didácticas con experimentación real.</p>
+          </div>
+          <div class="nav-between">
+            <button class="nav-btn" data-cat-prev="lengua"><span class="material-icons">arrow_back</span> Anterior</button>
+            <button class="nav-btn" data-cat-next="soc">Siguiente <span class="material-icons">arrow_forward</span></button>
+          </div>
+        </div>
+        <div class="panel-right">
+          <div class="ph-icon"><span class="material-icons">science</span></div>
+          <div class="ph-label">Zona de producción docente</div>
+          <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
+        </div>
       </div>
-      <div class="panel-tile glass-strong reveal delay-2" data-experiencia="ingles">
-        <span class="num">02 · Escuela Precursora</span>
-        <h3>Inglés por niveles</h3>
-        <p class="sub">Agrupamientos por nivel para aprender mejor, no por edad. Docentes de Inglés.</p>
-        <span class="open">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
+
+      <div class="tab-panel" data-cat="soc">
+        <div class="panel-left glass-strong">
+          <span class="label">Cátedra compartida 02</span>
+          <h3>Ciencias Sociales</h3>
+          <p class="desc">Espacio preparado para integrar la producción del equipo sin romper la identidad visual.</p>
+          <div class="que-hacemos">
+            <span class="qlbl">Qué hacemos</span>
+            <p>Construcción colaborativa de unidades didácticas que articulan contenidos sociales con análisis de contexto local y real.</p>
+          </div>
+          <div class="nav-between">
+            <button class="nav-btn" data-cat-prev="nat"><span class="material-icons">arrow_back</span> Anterior</button>
+            <button class="nav-btn" data-cat-next="rob">Siguiente <span class="material-icons">arrow_forward</span></button>
+          </div>
+        </div>
+        <div class="panel-right">
+          <div class="ph-icon"><span class="material-icons">public</span></div>
+          <div class="ph-label">Zona de producción docente</div>
+          <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
+        </div>
       </div>
-      <div class="panel-tile glass-strong reveal delay-3" data-experiencia="jue">
-        <span class="num">03 · JUE + Contingencias</span>
-        <h3>Una ausencia docente<br>no es ausencia de aprendizaje</h3>
-        <p class="sub">Memo Conjunto 13/2026: permanencia, cuidado integral y continuidad pedagógica. Coordinadora + Preceptora.</p>
-        <span class="open">Abrir experiencia <span class="material-icons">arrow_forward</span></span>
+
+      <div class="tab-panel" data-cat="rob">
+        <div class="panel-left glass-strong">
+          <span class="label">Cátedra compartida 03</span>
+          <h3>Robótica + Club de Ciencias</h3>
+          <p class="desc">Aprender haciendo con proyectos de robótica y exploración científica en el Club de Ciencias.</p>
+          <div class="que-hacemos">
+            <span class="qlbl">Qué hacemos</span>
+            <p>Construcción de prototipos, experimentación y presentación de hallazgos en equipo. Articulación con Programación III (5°) y Club de Ciencias (1°, 3°, 3°).</p>
+          </div>
+          <div class="nav-between">
+            <button class="nav-btn" data-cat-prev="soc"><span class="material-icons">arrow_back</span> Anterior</button>
+            <button class="nav-btn" data-cat-next="lengua">Siguiente <span class="material-icons">arrow_forward</span></button>
+          </div>
+        </div>
+        <div class="panel-right">
+          <div class="ph-icon"><span class="material-icons">smart_toy</span></div>
+          <div class="ph-label">Zona de producción docente</div>
+          <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" data-cat="lengua">
+        <div class="panel-left glass-strong">
+          <span class="label">Cátedra compartida 04</span>
+          <h3>Lengua y Literatura + FVT</h3>
+          <p class="desc">Articulación entre el espacio curricular y Formación para la Vida y el Trabajo.</p>
+          <div class="que-hacemos">
+            <span class="qlbl">Qué hacemos</span>
+            <p>Producción de textos con propósito real, vinculados a proyectos comunitarios. Ciudadanía y Participación (1° y 3°) y FVT (4°).</p>
+          </div>
+          <div class="nav-between">
+            <button class="nav-btn" data-cat-prev="rob"><span class="material-icons">arrow_back</span> Anterior</button>
+            <button class="nav-btn" data-cat-next="nat">Volver al inicio <span class="material-icons">arrow_forward</span></button>
+          </div>
+        </div>
+        <div class="panel-right">
+          <div class="ph-icon"><span class="material-icons">menu_book</span></div>
+          <div class="ph-label">Zona de producción docente</div>
+          <p class="ph-text">Espacio preparado para integrar evidencias: fotos • videos • producciones • capturas • voz de estudiantes.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="ingles" class="sub-section">
+  <div class="container">
+    <div class="sub-header reveal">
+      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
+      <span class="crumb">Escuela Precursora · <b>Inglés por niveles</b></span>
+    </div>
+    <div class="section-header reveal">
+      <span class="brand-chip"><span class="dot"></span>Experiencia 02 · Inglés por niveles</span>
+      <h2>Agrupamientos para <span class="text-grad">aprender mejor</span></h2>
+      <p>Docentes de Inglés organizan a los estudiantes por nivel de desempeño, no por edad. Es una experiencia precursora de la Res. 88/25.</p>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="ingles-grid">
+      <div class="ingles-left glass-strong reveal delay-1">
+        <span class="label">Cómo lo hacemos</span>
+        <h3>Diagnóstico · agrupamiento · re-agrupamiento</h3>
+        <p class="desc">Los estudiantes se agrupan por nivel para aprender mejor, no por edad. Cada docente toma a su cargo el nivel que mejor domina.</p>
+        <div class="pasos">
+          <div class="paso"><div class="num">1</div><div class="body"><h4>Diagnóstico inicial</h4><p>Identificamos el nivel real de cada estudiante, sin etiquetar.</p></div></div>
+          <div class="paso"><div class="num">2</div><div class="body"><h4>Agrupamiento flexible</h4><p>Armamos grupos por nivel, no por año o sección.</p></div></div>
+          <div class="paso"><div class="num">3</div><div class="body"><h4>Re-agrupamiento según progreso</h4><p>A medida que avanzan, los estudiantes pueden cambiar de grupo.</p></div></div>
+        </div>
+      </div>
+      <div class="ingles-right reveal delay-2">
+        <div class="panel-right" style="border: none; padding: 0;">
+          <div class="ph-icon"><span class="material-icons">translate</span></div>
+          <div class="ph-label">Zona de producción docente</div>
+          <p class="ph-text">Espacio preparado para integrar la producción del equipo: fotos • videos • producciones • capturas • voz de estudiantes. Docentes de Inglés.</p>
+        </div>
       </div>
     </div>
-    <p class="closing-line reveal delay-4">"Tocá cada panel para entrar a la experiencia. La programadora puede navegar sin cortar el ritmo."</p>
+  </div>
+</section>
+
+<section id="jue-section" class="sub-section">
+  <div class="container">
+    <div class="sub-header reveal">
+      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
+      <span class="crumb">Escuela Precursora · <b>JUE + Contingencias</b></span>
+    </div>
+    <div class="section-header reveal">
+      <span class="brand-chip"><span class="dot"></span>Experiencia 03 · Jornada Única Escolar</span>
+      <h2>Una ausencia docente no es<br>una <span class="text-grad">ausencia de aprendizaje</span></h2>
+      <p>Memo Conjunto 13/2026: permanencia, cuidado integral y continuidad pedagógica.</p>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="jue-grid">
+      <div class="jue-left glass-strong reveal delay-1">
+        <span class="label">Cómo sostenemos la continuidad</span>
+        <h3>4 pasos para que el tiempo siga siendo pedagógico</h3>
+        <p class="desc">Cuando falta un docente, no cubrimos una hora: sostenemos una trayectoria.</p>
+        <div class="steps4">
+          <div class="step4"><div class="n">1</div><div class="t">Contingencia</div><div class="d">inasistencia imprevista</div></div>
+          <div class="step4"><div class="n">2</div><div class="t">Decisión</div><div class="d">optimizar recursos</div></div>
+          <div class="step4"><div class="n">3</div><div class="t">Continuidad</div><div class="d">tiempo pedagógico</div></div>
+          <div class="step4"><div class="n">4</div><div class="t">Foco</div><div class="d">oralidad · lectura · escritura · convivencia</div></div>
+        </div>
+        <p class="quote">"No cubrimos una hora. Sostenemos una trayectoria."</p>
+      </div>
+      <div class="jue-right reveal delay-2">
+        <div class="panel-right" style="border: none; padding: 0;">
+          <div class="ph-icon"><span class="material-icons">schedule</span></div>
+          <div class="ph-label">Zona de producción docente</div>
+          <p class="ph-text">Quién habla: Coordinadora + Preceptora. La directora cede la palabra. La programadora mantiene el control del tablero. Objetivo: mostrar práctica, no describirla.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capacidades" class="sub-section">
+  <div class="container">
+    <div class="sub-header reveal">
+      <a href="#precursora" class="back"><span class="material-icons">arrow_back</span> Volver a Precursora</a>
+      <span class="crumb">Escuela Precursora · <b>Capacidades</b></span>
+    </div>
+    <div class="section-header reveal">
+      <span class="brand-chip"><span class="dot"></span>Experiencia 04 · Capacidades fundamentales</span>
+      <h2>Oralidad · lectura · escritura<br><span class="text-grad">+ resolución</span></h2>
+      <p>Las cuatro capacidades que el PMI prioriza como foco transversal. No son contenidos de Lengua: atraviesan toda la escuela.</p>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="cap-grid">
+      <div class="cap glass-strong reveal delay-1"><div class="ic"><span class="material-icons">record_voice_over</span></div><h3>ORALIDAD</h3><span class="sub">Expresar ideas, argumentar, comunicar procedimientos frente a otros.</span></div>
+      <div class="cap glass-strong reveal delay-2"><div class="ic"><span class="material-icons">menu_book</span></div><h3>LECTURA</h3><span class="sub">Comprender consignas, sostener textos, interpretar información, seleccionar fuentes.</span></div>
+      <div class="cap glass-strong reveal delay-3"><div class="ic"><span class="material-icons">edit_note</span></div><h3>ESCRITURA</h3><span class="sub">Organizar ideas, producir respuestas y distintos formatos textuales.</span></div>
+      <div class="cap glass-strong reveal delay-4"><div class="ic"><span class="material-icons">psychology</span></div><h3>RESOLUCIÓN</h3><span class="sub">Cuestionar el sentido común, desnaturalizar, fundamentar soluciones.</span></div>
+    </div>
+    <p class="closing-line reveal delay-5">"La innovación aparece cuando la norma se vuelve experiencia."</p>
   </div>
 </section>
 
@@ -865,7 +1144,7 @@ document.querySelectorAll('[data-count-to]').forEach(el => countObserver.observe
 // Scroll progress + topnav
 const progress = document.getElementById('progress');
 const topnav = document.getElementById('topnav');
-const sections = ['hero','sep-1','identidad','adn','pei','pmi','aec','regimen','jornada','sep-2','precursora','panel','catalogo','cierre'];
+const sections = ['hero','sep-1','identidad','adn','pei','pmi','aec','regimen','jornada','sep-2','precursora','catedras','ingles','jue-section','capacidades','catalogo','cierre'];
 const navLinks = document.querySelectorAll('#topnav .nav-link');
 
 function onScroll() {
@@ -951,6 +1230,26 @@ function openExperienciaModal(id) {
   document.body.style.overflow = 'hidden';
 }
 
+// Cátedras: tabs internas (navegación entre las 4 experiencias)
+function showCatedra(cat) {
+  document.querySelectorAll('#catedras-tabs .tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.cat === cat);
+  });
+  document.querySelectorAll('#catedras .tab-panel').forEach(p => {
+    p.classList.toggle('active', p.dataset.cat === cat);
+  });
+}
+document.querySelectorAll('#catedras-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => showCatedra(tab.dataset.cat));
+});
+// Botones "Anterior / Siguiente" dentro de cada panel
+document.querySelectorAll('#catedras .nav-btn[data-cat-next]').forEach(btn => {
+  btn.addEventListener('click', () => showCatedra(btn.dataset.catNext));
+});
+document.querySelectorAll('#catedras .nav-btn[data-cat-prev]').forEach(btn => {
+  btn.addEventListener('click', () => showCatedra(btn.dataset.catPrev));
+});
+
 function closeModal() {
   modal.classList.remove('open');
   document.body.style.overflow = '';
@@ -958,9 +1257,6 @@ function closeModal() {
 
 document.querySelectorAll('#catalogo .tile').forEach(tile => {
   tile.addEventListener('click', () => openActivityModal(tile.dataset.activity));
-});
-document.querySelectorAll('#panel .panel-tile').forEach(tile => {
-  tile.addEventListener('click', () => openExperienciaModal(tile.dataset.experiencia));
 });
 
 modal.querySelector('.modal-close').addEventListener('click', closeModal);
