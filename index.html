@@ -73,14 +73,18 @@ body {
 #topnav .nav-link:hover { color: var(--text); background: var(--glass); }
 #topnav .nav-link.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-weight: 700; }
 
-/* Section common */
+/* Section common — cada sección ocupa exactamente 100vh en desktop (1280x800) */
 section {
   position: relative;
-  padding: 120px 64px;
+  padding: 64px 64px;
   max-width: 100vw;
   overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.container { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; }
+.container { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2; width: 100%; }
 
 /* Glass */
 .glass { background: var(--glass); border: 1px solid var(--line); border-radius: 18px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
@@ -105,7 +109,7 @@ section {
 #hero {
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 100px 64px 80px;
+  padding: 64px 64px;
   background: var(--bg);
   position: relative;
 }
@@ -138,39 +142,43 @@ section {
 #hero .exp-label { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.4em; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 12px; display: block; }
 #hero h1 {
   font-family: var(--font-heading); font-weight: 800;
-  font-size: clamp(48px, 7.5vw, 104px);
-  line-height: 1.0; letter-spacing: -0.03em; color: var(--text);
-  margin: 0 0 24px;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1.02; letter-spacing: -0.03em; color: var(--text);
+  margin: 16px 0 20px;
 }
-#hero .tagline { font-size: clamp(20px, 1.7vw, 26px); color: var(--text-2); max-width: 720px; line-height: 1.4; margin-bottom: 32px; font-weight: 300; font-style: italic; }
-#hero .subtitle { font-size: clamp(16px, 1.3vw, 19px); color: var(--text-2); max-width: 760px; line-height: 1.55; margin-bottom: 40px; }
-#hero .meta-row { display: flex; gap: 40px; border-top: 1px solid var(--line); padding-top: 24px; max-width: 760px; flex-wrap: wrap; }
+#hero .tagline { font-size: clamp(18px, 1.5vw, 22px); color: var(--text-2); max-width: 720px; line-height: 1.4; margin-bottom: 20px; font-weight: 300; font-style: italic; }
+#hero .subtitle { font-size: clamp(15px, 1.2vw, 17px); color: var(--text-2); max-width: 760px; line-height: 1.5; margin-bottom: 24px; }
+#hero .meta-row { display: flex; gap: 32px; border-top: 1px solid var(--line); padding-top: 16px; max-width: 760px; flex-wrap: wrap; }
 #hero .meta-col { display: flex; flex-direction: column; gap: 4px; }
 #hero .meta-label { font-family: var(--font-num); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); }
-#hero .meta-val { font-family: var(--font-num); font-size: 28px; font-weight: 700; color: var(--accent); }
-#hero .meta-val.smaller { font-size: 18px; }
+#hero .meta-val { font-family: var(--font-num); font-size: 22px; font-weight: 700; color: var(--accent); }
+#hero .meta-val.smaller { font-size: 16px; }
 #scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-muted); font-family: var(--font-num); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; z-index: 3; }
 #scroll-hint .arrow { width: 1px; height: 32px; background: linear-gradient(180deg, var(--accent), transparent); animation: scroll-pulse 2s ease infinite; }
 @keyframes scroll-pulse { 0%,100% { opacity: 0.4; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
 
 /* Section header */
-.section-header { margin-bottom: 60px; }
+.section-header { margin-bottom: 32px; }
 .section-header h2 {
   font-family: var(--font-heading); font-weight: 700;
-  font-size: clamp(36px, 4.5vw, 56px);
+  font-size: clamp(28px, 3.5vw, 44px);
   line-height: 1.1; color: var(--text); letter-spacing: -0.02em;
-  margin-top: 16px;
+  margin-top: 12px;
 }
-.section-header p { font-size: 17px; color: var(--text-2); max-width: 720px; margin-top: 20px; line-height: 1.55; }
-.section-header .closing-line { font-size: 14px; color: var(--text-muted); margin-top: 16px; font-style: italic; max-width: 720px; }
+.section-header p { font-size: 15px; color: var(--text-2); max-width: 720px; margin-top: 12px; line-height: 1.5; }
+.section-header .closing-line { font-size: 14px; color: var(--text-muted); margin-top: 12px; font-style: italic; max-width: 720px; }
 
 /* Chapter separator (used between Part 1 and Part 2) */
 .chapter-sep {
   text-align: center;
-  padding: 80px 64px;
+  padding: 64px 64px;
   background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 50%, var(--bg) 100%);
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .chapter-sep .cs-eyebrow { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.32em; color: var(--accent); text-transform: uppercase; font-weight: 700; }
 .chapter-sep .cs-num { font-family: var(--font-heading); font-size: clamp(80px, 12vw, 160px); font-weight: 800; line-height: 1; color: var(--text); margin: 8px 0; letter-spacing: -0.04em; }
@@ -462,29 +470,30 @@ section {
 
 /* CATALOGO (Cuadernillo) — nueva versión con focos + ejemplos + botón PDF */
 #catalogo { background: var(--bg-2); }
-#catalogo .focos-block { margin-top: 48px; }
-#catalogo .focos-label { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 20px; }
-#catalogo .focos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-#catalogo .foco { padding: 24px; display: flex; flex-direction: column; gap: 8px; min-height: 160px; transition: transform 0.3s ease, border-color 0.3s ease; }
+#catalogo .focos-block { margin-top: 20px; }
+#catalogo .focos-label { font-family: var(--font-num); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+#catalogo .focos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+#catalogo .foco { padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; min-height: 100px; transition: transform 0.3s ease, border-color 0.3s ease; }
 #catalogo .foco:hover { transform: translateY(-4px); border-color: var(--accent); }
-#catalogo .foco .ic { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; }
-#catalogo .foco .ic .material-icons { color: var(--accent); font-size: 24px; }
-#catalogo .foco h3 { font-family: var(--font-heading); font-size: 17px; color: var(--text); font-weight: 700; }
-#catalogo .foco .sub { font-size: 13px; color: var(--text-2); line-height: 1.4; }
-#catalogo .ejemplos-block { margin-top: 36px; padding: 32px; }
-#catalogo .ejemplos-block .lbl { font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
-#catalogo .ejemplos-block .lista { display: flex; flex-wrap: wrap; gap: 12px; }
-#catalogo .ejemplos-block .ej { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--glass); font-family: var(--font-heading); font-size: 14px; color: var(--text); font-weight: 600; transition: all 0.2s ease; cursor: pointer; }
+#catalogo .foco .ic { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(244,114,182,0.10)); display: flex; align-items: center; justify-content: center; }
+#catalogo .foco .ic .material-icons { color: var(--accent); font-size: 16px; }
+#catalogo .foco h3 { font-family: var(--font-heading); font-size: 12px; color: var(--text); font-weight: 700; }
+#catalogo .foco .sub { font-size: 10px; color: var(--text-2); line-height: 1.3; }
+#catalogo .ejemplos-block { margin-top: 14px; padding: 14px 20px; }
+#catalogo .ejemplos-block .lbl { font-family: var(--font-num); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+#catalogo .ejemplos-block .lista { display: flex; flex-wrap: wrap; gap: 8px; }
+#catalogo .ejemplos-block .ej { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--glass); font-family: var(--font-heading); font-size: 11px; color: var(--text); font-weight: 600; transition: all 0.2s ease; cursor: pointer; }
 #catalogo .ejemplos-block .ej:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-#catalogo .ejemplos-block .ej .material-icons { font-size: 16px; color: var(--accent); }
-#catalogo .pdf-block { margin-top: 36px; padding: 40px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
-#catalogo .pdf-block .pdf-ic { width: 72px; height: 72px; border-radius: 18px; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 32px rgba(244,114,182,0.25); }
-#catalogo .pdf-block .pdf-ic .material-icons { color: var(--bg); font-size: 36px; }
-#catalogo .pdf-block h3 { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-weight: 700; }
-#catalogo .pdf-block .pdf-sub { font-size: 14px; color: var(--text-muted); max-width: 560px; line-height: 1.5; }
-#catalogo .pdf-block .pdf-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 999px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-family: var(--font-num); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 24px rgba(244,114,182,0.25); }
-#catalogo .pdf-block .pdf-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 32px rgba(244,114,182,0.35); }
-#catalogo .pdf-block .pdf-btn .material-icons { font-size: 20px; }
+#catalogo .ejemplos-block .ej .material-icons { font-size: 13px; color: var(--accent); }
+#catalogo .pdf-block { margin-top: 14px; padding: 14px 20px; display: flex; flex-direction: row; align-items: center; gap: 16px; justify-content: flex-start; flex-wrap: wrap; }
+#catalogo .pdf-block .pdf-ic { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(244,114,182,0.25); flex-shrink: 0; }
+#catalogo .pdf-block .pdf-ic .material-icons { color: var(--bg); font-size: 20px; }
+#catalogo .pdf-block .pdf-text { text-align: left; flex: 1; min-width: 240px; }
+#catalogo .pdf-block h3 { font-family: var(--font-heading); font-size: 15px; color: var(--text); font-weight: 700; margin-bottom: 2px; }
+#catalogo .pdf-block .pdf-sub { font-size: 11px; color: var(--text-muted); max-width: 480px; line-height: 1.4; }
+#catalogo .pdf-block .pdf-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--bg); font-family: var(--font-num); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 6px 18px rgba(244,114,182,0.25); cursor: pointer; border: none; flex-shrink: 0; }
+#catalogo .pdf-block .pdf-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 24px rgba(244,114,182,0.35); }
+#catalogo .pdf-block .pdf-btn .material-icons { font-size: 14px; }
 
 /* Mantengo el .bento viejo por si se referencia en JS, pero no se usa */
 #catalogo .bento { display: none; }
@@ -552,7 +561,7 @@ section {
 #cierre {
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 120px 64px;
+  padding: 64px 64px;
   background:
     radial-gradient(ellipse at top right, rgba(167,139,250,0.22), transparent 60%),
     radial-gradient(ellipse at bottom left, rgba(244,114,182,0.16), transparent 60%),
@@ -570,24 +579,37 @@ section {
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
 }
 #cierre .container { max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; }
-#cierre .eyebrow { font-family: var(--font-num); color: var(--accent); text-transform: uppercase; letter-spacing: 0.22em; font-size: 12px; font-weight: 600; display: block; margin-bottom: 20px; }
-#cierre h1 { font-family: var(--font-heading); font-size: clamp(40px, 6vw, 72px); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); margin-bottom: 16px; }
-#cierre .sub { font-size: clamp(22px, 2.2vw, 32px); color: var(--text-2); line-height: 1.3; margin-bottom: 40px; font-weight: 300; }
-#cierre .verbs-title { font-family: var(--font-num); font-size: 12px; text-transform: uppercase; letter-spacing: 0.22em; color: var(--accent); font-weight: 700; margin-bottom: 20px; }
-#cierre .verbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px; margin: 0 auto 40px; }
-#cierre .verb { padding: 20px; text-align: center; }
-#cierre .verb .v { font-family: var(--font-heading); font-size: 22px; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-#cierre .verb .sub { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin: 0; font-size: 13px; }
-#cierre .quote { font-family: var(--font-heading); font-size: 22px; color: var(--text); font-style: italic; max-width: 720px; margin: 32px auto; line-height: 1.4; font-weight: 300; }
-#cierre .footer { margin-top: 60px; font-family: var(--font-num); font-size: 11px; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; }
+#cierre .eyebrow { font-family: var(--font-num); color: var(--accent); text-transform: uppercase; letter-spacing: 0.22em; font-size: 11px; font-weight: 600; display: block; margin-bottom: 12px; }
+#cierre h1 { font-family: var(--font-heading); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--text); margin-bottom: 12px; }
+#cierre .sub { font-size: clamp(18px, 1.8vw, 24px); color: var(--text-2); line-height: 1.3; margin-bottom: 20px; font-weight: 300; }
+#cierre .verbs-title { font-family: var(--font-num); font-size: 11px; text-transform: uppercase; letter-spacing: 0.22em; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+#cierre .verbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 720px; margin: 0 auto 16px; }
+#cierre .verb { padding: 12px; text-align: center; }
+#cierre .verb .v { font-family: var(--font-heading); font-size: 18px; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+#cierre .verb .sub { font-family: var(--font-num); font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); margin: 0; }
+#cierre .quote { font-family: var(--font-heading); font-size: 17px; color: var(--text); font-style: italic; max-width: 720px; margin: 16px auto; line-height: 1.4; font-weight: 300; }
+#cierre .footer { margin-top: 20px; font-family: var(--font-num); font-size: 10px; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; }
 
 /* Mobile */
 @media (max-width: 920px) {
   #topnav .nav-link { display: none; }
-  section { padding: 80px 24px; }
-  #hero { padding: 80px 24px; }
-  #identidad .stats-grid, #adn .timeline, #pei .mv-grid, #pei .verbos-grid, #pmi .focus-grid, #pmi .stats-row, #aec .valores-grid, #regimen .steps, #jornada .info-grid, #precursora .focus-grid, #panel .panel-grid, #panel .panel-grid-2, #catalogo .bento { grid-template-columns: 1fr; }
-  #cierre .verbs { grid-template-columns: 1fr; }
+  section { padding: 56px 24px !important; min-height: auto !important; height: auto !important; }
+  #hero { padding: 56px 24px !important; }
+  #cierre { padding: 56px 24px !important; }
+  .chapter-sep { padding: 56px 24px !important; min-height: auto !important; }
+  #identidad .stats-grid, #adn .timeline, #pei .mv-grid, #pei .verbos-grid, #pmi .focus-grid, #pmi .stats-row, #aec .valores-grid, #regimen .steps, #jornada .info-grid, #precursora .focus-grid, #catalogo .focos-grid { grid-template-columns: 1fr 1fr !important; }
+  #cierre .verbs { grid-template-columns: 1fr !important; }
+  #hero h1 { font-size: clamp(32px, 8vw, 48px) !important; }
+  #hero .subtitle { font-size: 14px !important; }
+  #hero .meta-row { gap: 16px !important; }
+  #hero .meta-val { font-size: 18px !important; }
+  .section-header h2 { font-size: clamp(24px, 6vw, 32px) !important; }
+  .section-header p { font-size: 14px !important; }
+  .float-modal { padding: 20px 12px !important; }
+  .float-modal .float-card { padding: 24px 20px !important; }
+  .catedras-panel.active { grid-template-columns: 1fr !important; }
+  .ingles-grid, .jue-grid { grid-template-columns: 1fr !important; }
+  .cap-grid { grid-template-columns: 1fr 1fr !important; }
 }
 </style>
 </head>
